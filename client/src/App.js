@@ -6,6 +6,7 @@ import LoginPage from "./components/views/loginPage/LoginPage";
 import RegisterPage from "./components/views/registerPage/RegisterPage";
 import UploadPage from "./components/views/UploadPage/UploadPage";
 import UserGallery from "./components/views/gallary/UserGallery";
+import HelpDesk from "./components/views/Helpdesk/Helpdesk";
 import {
   authEmail,
   authAdmin,
@@ -83,6 +84,9 @@ function App() {
             path={"/mygallery"}
             element={<UserGallery authInfo={authInfo} />}
           />
+        </Routes>
+        <Routes>
+          <Route exact={true} path={"/helpdesk"} element={<HelpDesk />} />
         </Routes>
       </Router>
     </div>

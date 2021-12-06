@@ -6,10 +6,14 @@ import {
   setAuthAdmin
 } from "../../../utils/Auth";
 import Gallery from "../gallary/Gallery";
+import GallaryItem from "../gallary/GallayItem";
+
 function LandingPage(props) {
   return (
     <div>
-      <Gallery authInfo={props.authInfo} />
+      <GallaryItem authInfo={props.authInfo} />
+      <GallaryItem authInfo={props.authInfo} />
+      <GallaryItem authInfo={props.authInfo} />
     </div>
   );
 }

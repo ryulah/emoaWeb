@@ -1,27 +1,28 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+
 function Gallery(props) {
   const authEmail = props.authInfo._authEmail;
-  const [itemCount, setItemCount] = useState("");
-  const [items, setItems] = useState([]);
+  const [bundleList, setBundleList] = useState([]);
+  const tempArray = new Array();
   useEffect(() => {
     axios
       .get(`/server/user/getUserIcons?user_id=${authEmail}&mode=1`)
       .then(res => {
-        if (res.data.success) {
-          console.log(res.data.result);
-          setItems([...res.data.result]);
-          setItemCount(res.data.result.length);
-        }
+        console.log(res.data.result.length);
+        var tempArray = res.data.result;
       });
   }, [props.authInfo._authEmail]);
+  console.log(bundleList);
 
   return (
     <div>
-      {itemCount < 1 && <h1 style={{ "font-size": "100px" }}>텅..</h1>}
-      {itemCount > 0 &&
-        items.map((cur, index, items) => {
-          console.log(cur);
+      <h2>Gallery</h2>
+      <br />
+      {bundleList.length < 1 && <p>텅~!</p>}
+      {bundleList.length >= 1 &&
+        bundleList.map((cur, index, bundleList) => {
+          console.log(bundleList[index].bundleTag);
           return (
             <img
               style={{
@@ -29,7 +30,10 @@ function Gallery(props) {
                 width: "300px",
                 height: "240px"
               }}
-              src={"http://localhost:5001/resources/images/" + cur}
+              src={
+                "http://localhost:5001/resources/images/" +
+                bundleList[index].thumbnail
+              }
               key={index}
             />
           );

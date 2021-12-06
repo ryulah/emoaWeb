@@ -12,6 +12,15 @@ function MiddleMenu(props) {
       <li>
         <a href="/register"> register</a>
       </li>
+      <li>
+        <a href="/upload"> upload emoticons</a>
+      </li>
+      <li>
+        <a href="/mygallery"> My Gallery</a>
+      </li>
+      <li>
+        <a href="/helpdesk"> HELP DESK</a>
+      </li>
     </ul>
   );
 }
