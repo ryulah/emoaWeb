@@ -1,3 +1,4 @@
 node_modules
 gitpush.txt
 _resources
+/server/mySQL/dbConfig.js
