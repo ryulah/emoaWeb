@@ -5,15 +5,17 @@ import {
   setAuthEmail,
   setAuthAdmin
 } from "../../../utils/Auth";
-import Gallery from "../gallary/Gallery";
+import Gallery from "../gallary/Gallery_test";
 import GallaryItem from "../gallary/GallayItem";
+import Carousel from "../../../utils/Carousel";
 
 function LandingPage(props) {
   return (
     <div>
-      <GallaryItem authInfo={props.authInfo} />
-      <GallaryItem authInfo={props.authInfo} />
-      <GallaryItem authInfo={props.authInfo} />
+      <div>
+        <GallaryItem authInfo={props.authInfo} />
+      </div>
+      <Carousel />
     </div>
   );
 }

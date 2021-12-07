@@ -2,7 +2,7 @@ import React from "react";
 
 function MiddleMenu(props) {
   return (
-    <ul class="navbar__menu">
+    <ul className="navbar__menu">
       <li>
         <a href="/">HOME </a>
       </li>

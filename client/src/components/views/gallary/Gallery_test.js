@@ -1,45 +1,64 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import "bootstrap/dist/css/bootstrap.css";
+import {
+  CardGroup,
+  Card,
+  CardImg,
+  CardBody,
+  CardTitle,
+  CardText,
+  Button,
+  CardSubtitle
+} from "reactstrap";
 
-function Gallery(props) {
-  const authEmail = props.authInfo._authEmail;
-  const [bundleList, setBundleList] = useState([]);
-  const tempArray = new Array();
-  useEffect(() => {
-    axios
-      .get(`/server/user/getUserIcons?user_id=${authEmail}&mode=1`)
-      .then(res => {
-        console.log(res.data.result.length);
-        var tempArray = res.data.result;
-      });
-  }, [props.authInfo._authEmail]);
-  console.log(bundleList);
-
+function Gallery_test(props) {
   return (
-    <div>
-      <h2>Gallery</h2>
-      <br />
-      {bundleList.length < 1 && <p>텅~!</p>}
-      {bundleList.length >= 1 &&
-        bundleList.map((cur, index, bundleList) => {
-          console.log(bundleList[index].bundleTag);
-          return (
-            <img
-              style={{
-                minWidth: "300px",
-                width: "300px",
-                height: "240px"
-              }}
-              src={
-                "http://localhost:5001/resources/images/" +
-                bundleList[index].thumbnail
-              }
-              key={index}
-            />
-          );
-        })}
+    <div style={{ height: "100px" }}>
+      <CardGroup>
+        <Card>
+          <CardImg
+            alt="Card image cap"
+            src="https://picsum.photos/318/180"
+            top
+            width="100%"
+          />
+          <div className="listDetail">
+            <ul style={{ display: "flex", listStyle: "none" }}>
+              <li style={{ margin: "1px" }}>
+                <img
+                  style={{
+                    width: "30%"
+                  }}
+                  src={"http://localhost:5001/resources/images/test.png"}
+                />
+              </li>
+              <li style={{ margin: "1px" }}>
+                <img
+                  style={{
+                    width: "30%"
+                  }}
+                  src={"http://localhost:5001/resources/images/test.png"}
+                />
+              </li>
+            </ul>
+          </div>
+          <CardBody>
+            <CardTitle tag="h5">Card title</CardTitle>
+            <CardSubtitle className="mb-2 text-muted" tag="h6">
+              Card subtitle
+            </CardSubtitle>
+            <CardText>
+              This is a wider card with supporting text below as a natural
+              lead-in to additional content. This content is a little bit
+              longer.
+            </CardText>
+            <Button>입찰하기</Button>
+          </CardBody>
+        </Card>
+      </CardGroup>
     </div>
   );
 }
 
-export default Gallery;
+export default Gallery_test;

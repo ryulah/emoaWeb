@@ -21,7 +21,8 @@ a {
   /* 위, 아래 */
   padding: 8px 12px;
 }
-.navbar__logo {
+.navbar__logo,
+.navbar__logo p {
   font-size: 24px;
   color: white;
 }
@@ -61,33 +62,67 @@ a {
   font-size: 24px;
   color: #d49466;
 }
+.navbar__logo a,
+.navbar__logo span {
+  display: flex;
+  margin-top: 10px;
+}
 
-@media screen and (max-width: 768px) {
+.gallery__carousel {
+  /* height: 5%; */
+  width: 40%;
+  margin-left: 30%;
+  margin: 10px 35% 10px;
+}
+.carousel-inner {
+  height: 150px;
+}
+
+.carousel-item img {
+  height: 150px;
+}
+
+.card-img,
+.card-img-top,
+.card-img-bottom {
+  width: 40%;
+}
+
+@media screen and (max-width: 970px) {
   .navbar {
     flex-direction: column;
     /* align item이 center로 기설정되어있는 걸 다시 바꿔 */
     align-items: flex-start;
     padding: 8px 24px;
   }
+
+  .navbar__logo a,
+  .navbar__logo span {
+    display: flex;
+    margin-top: 10px;
+  }
   .navbar__menu {
-    /* display: none; */
+    display: none;
     flex-direction: column;
     align-items: center;
     width: 100%;
   }
   .navbar__userInfo li {
-    /* display: none; */
+    display: none;
     width: 100%;
     text-align: center;
   }
-  /* .navbar__toggleBtn {
+  .navbar__toggleBtn {
     display: block;
-  } */
+  }
 
   .navbar__menu.active {
-    display: flex;
+    display: block;
   }
   .navbar__userInfo.active {
-    display: flex;
+    display: block;
+  }
+  .gallery__carousel {
+    display: none;
   }
 }

@@ -10,7 +10,7 @@ import { Menu, Icon, Badge } from "antd";
 import UserInfo from "../../userInfo/UserInfo";
 function RightMenu(props) {
   return (
-    <ul class="navbar__userInfo">
+    <ul className="navbar__userInfo">
       <li>
         <i>
           <UserInfo authInfo={props.authInfo} />

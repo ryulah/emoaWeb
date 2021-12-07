@@ -4,22 +4,30 @@ import RightMenu from "../navBar/sections/RightMenu";
 import MiddleMenu from "../navBar/sections/MiddleMenu";
 import UserInfo from "../userInfo/UserInfo";
 import "../../../resources/css/style.css";
-//import * as JS from "../../../resources/js/main";
-
+import jQuery from "jquery";
+window.$ = window.jQuery = jQuery;
 function NavBar(props) {
-  <script src="../../../resources/js/main.js" defer />;
-  return (
-    //JS.
+  window.$(document).ready(() => {
+    const toggleBtn = document.querySelector(".navbar__toggleBtn");
+    const menu = document.querySelector(".navbar__menu");
+    const icons = document.querySelector(".navbar__userInfo");
+    toggleBtn.addEventListener("click", () => {
+      //console.log("cliekd");
+      menu.classList.toggle("active");
+      icons.classList.toggle("active");
+    });
+  });
 
-    <nav class="navbar">
+  return (
+    <nav className="navbar">
       <LeftMenu mode="horizontal" authInfo={props.authInfo} />
 
       <MiddleMenu mode="horizontal" authInfo={props.authInfo} />
 
       <RightMenu mode="horizontal" authInfo={props.authInfo} />
-      {/* <a href="#" class="navbar__toggleBtn">
-        <i class="fas fa-bars">3</i>
-      </a> */}
+      <a href="#" className="navbar__toggleBtn">
+        <i className="fas fa-bars">#</i>
+      </a>
     </nav>
   );
 }
