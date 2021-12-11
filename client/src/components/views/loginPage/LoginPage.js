@@ -31,9 +31,11 @@ function LoginPage(props) {
           if (res.data.success) {
             console.log("login success");
             //cookie
-            props.setAuth(body);
-            setCookie(Email, res.data.admin);
-            <redirect to="/">alert(res.data.msg)</redirect>;
+
+            if (setCookie(Email, res.data.admin)) {
+              alert(res.data.msg);
+              <redirect push to="/" />;
+            }
           } else {
             alert(res.data.msg);
           }

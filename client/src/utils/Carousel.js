@@ -8,15 +8,15 @@ function Carousel() {
         items={[
           {
             key: 1,
-            src: "http://localhost:5001/resources/images/ad1.jpg"
+            src: "http://localhost:5001/_resources/images/ad1.jpg"
           },
           {
             key: 2,
-            src: "http://localhost:5001/resources/images/ad2.jpg"
+            src: "http://localhost:5001/_resources/images/ad2.jpg"
           },
           {
             key: 3,
-            src: "http://localhost:5001/resources/images/ad3.jpg"
+            src: "http://localhost:5001/_resources/images/ad3.jpg"
           }
         ]}
       />

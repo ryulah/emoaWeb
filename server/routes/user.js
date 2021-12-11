@@ -14,15 +14,8 @@ router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
 
 var mysql = require("mysql");
-var config = require("../mySQL/dbConfig");
+var connection = require("../mySQL/dbConfig");
 // 비밀번호는 별도의 파일로 분리해서 버전관리에 포함시키지 않아야 합니다.
-var connection = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  port: 3304,
-  password: "aa1202",
-  database: "myapp"
-});
 
 //connection.connect();
 
@@ -70,7 +63,7 @@ router.post("/register", (req, res) => {
 });
 
 router.post("/duplicationCheck", (req, res) => {
-  var queryStr = "select count(*) from aduser where user_id=?";
+  var queryStr = "select count(*) as count from aduser where user_id=?";
   console.log("duplicationCheck");
   console.log(req.body.email);
   var queryValues = [req.body.email];
@@ -79,8 +72,11 @@ router.post("/duplicationCheck", (req, res) => {
       console.log(err);
       return res.status(500).send({ success: false, msg: "failed" });
     } else {
-      console.log(results);
-      if (results.RowDataPacket !== null) {
+      var result = results[0].count;
+      parsedResult = JSON.stringify(results[0]);
+      oResult = JSON.parse(parsedResult);
+
+      if (result != 0) {
         console.log("alreay exist");
         return res.status(200).send({ success: false, msg: "failed to use" });
       } else return res.status(200).send({ success: true, msg: "available" });
@@ -91,7 +87,7 @@ router.post("/duplicationCheck", (req, res) => {
 // 파일 경로 및 이름 설정 옵션
 const storage = multer.diskStorage({
   destination: function(req, file, cb) {
-    cb(null, "./resources/images"); // 파일 업로드 경로
+    cb(null, "./_resources/images"); // 파일 업로드 경로
   },
   filename: function(req, file, cb) {
     var extension = path.basename(file.originalname).split(".")[1];
@@ -115,42 +111,65 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 router.post("/multipart/upload", upload.array("attachments"), (req, res) => {
   console.log("multipart/upload");
-
+  var bundleSeq;
   var queryStr =
-    "insert into item_master (user_id, originalFile,savedFile,bundleTag) values (?,?,?,?)";
-  var queryValues2 = [
+    "insert into item_master (user_id, originalFile,savedFile,bundleTag,bundleSeq) values (?,?,?,?,?)";
+  var queryValuesForHeader = [
     req.cookies.email,
     req.files[0].filename,
     req.body.bundleTag
   ];
-  for (var i = 0; i < req.files.length; i++) {
-    console.log(req.files[i].originalname);
-    var queryValues = [
-      req.cookies.email,
-      req.files[i].originalname,
-      req.files[i].filename,
-      req.body.bundleTag
-    ];
 
-    connection.query(queryStr, queryValues, err => {
-      if (err) {
-        console.log("file info saved err", err);
-        res.json({ ok: false, data: "file info saved err" });
-      }
-    });
-  }
   connection.query(
     "insert into item_header (user_id,thumbnail,bundleTag) values (?,?,?)",
-    queryValues2,
+    queryValuesForHeader,
     err => {
       if (err) {
         console.log(err);
-        res.json({ ok: false, data: "file info saved err" });
+        return res
+          .status(500)
+          .send({ success: false, msg: "failed to upload" });
       } else {
-        res.redirect("/");
+        connection.query(
+          "select bundleSeq from item_header where thumbnail=?",
+          req.files[0].filename,
+          (err, results) => {
+            if (!err) {
+              console.log("bundle seq : ", results[0].bundleSeq);
+              bundleSeq = results[0].bundleSeq;
+              //res.redirect("/");
+              for (var i = 0; i < req.files.length; i++) {
+                console.log(req.files[i].originalname);
+                var queryValues = [
+                  req.cookies.email,
+                  req.files[i].originalname,
+                  req.files[i].filename,
+                  req.body.bundleTag,
+                  bundleSeq
+                ];
+
+                connection.query(queryStr, queryValues, err => {
+                  if (err) {
+                    console.log("file info saved err", err);
+                    return res
+                      .status(500)
+                      .send({ success: false, msg: "failed to upload" });
+                  } else {
+                    console.log("success upload");
+                  }
+                });
+              }
+            } else {
+              return res
+                .status(500)
+                .send({ success: false, msg: "failed to upload" });
+            }
+          }
+        );
       }
     }
   );
+
   //res.json({ ok: true, data: "Multipart Upload Ok" });
   //클라이언트에 응답 전송
   //   res.writeHead("200", { "Content-Type": "text/html;charset=utf8" });
@@ -166,11 +185,13 @@ router.post("/multipart/upload", upload.array("attachments"), (req, res) => {
   //   res.write("<p>MIME TYPE : " + req.files.mimetype + "</p>");
   //   res.write("<p>파일 크기 : " + req.files.size + "</p>");
   //res.end();
+  return res.status(200).send({ success: true, msg: "success to upload" });
+  res.redirect("/");
 });
 
-router.get("/getUserIcons", (req, res) => {
-  console.log("getUserIcons", req.query.user_id);
-  console.log("getUserIcons", req.query.mode);
+router.get("/getItemList", (req, res) => {
+  console.log("getItemList", req.query.user_id);
+  console.log("getItemList", req.query.mode);
   var queryStr = "select * from item_master where deleteYN='N' and user_id=?";
   var queryValues = [req.query.user_id];
   var resultsArray = [];
@@ -184,11 +205,10 @@ router.get("/getUserIcons", (req, res) => {
           console.log("/getUserIcon mode 1 err " + err);
         } else {
           console.log("item_header", results);
+
           return res.status(200).send({
             success: true,
-            result: results.map((cur, index, results) => {
-              return results[index];
-            })
+            result: results
           });
         }
       }

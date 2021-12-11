@@ -1,6 +1,8 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.css";
-
+import "../../../resources/css/gallaryItem.css";
+import { useState, useEffect } from "react";
+import axios from "axios";
 import {
   CardGroup,
   Card,
@@ -11,53 +13,40 @@ import {
   Button,
   CardSubtitle
 } from "reactstrap";
+import { element } from "prop-types";
 function GallayItem(props) {
+  //console.log(props.itemList);
+  let list = props.itemList;
   return (
-    <div style={{ border: "1px solid gray" }}>
-      <div style={{ display: "flex", marginLeft: "20px" }}>
-        <img
-          style={{
-            minWidth: "300px",
-            width: "300px",
-            height: "240px",
-            display: "flex",
-            margin: "15px"
-          }}
-          src={"http://localhost:5001/resources/images/test.png"}
-        />
-        <ul style={{ display: "flex", listStyle: "none", margin: "15px" }}>
-          <li style={{ margin: "5px" }}>
-            <img
-              style={{
-                width: "50%",
-                height: "50%"
-              }}
-              src={"http://localhost:5001/resources/images/test.png"}
-            />
-          </li>
-          <li style={{ margin: "5px" }}>
-            <img
-              style={{
-                width: "50%",
-                height: "50%"
-              }}
-              src={"http://localhost:5001/resources/images/test.png"}
-            />
-          </li>
-        </ul>
+    <div className="itemContainter">
+      <div className="thumbnailContainer">
+        <img src={"http://localhost:5001/_resources/images/test.png"} />
       </div>
-      <CardBody>
-        <CardTitle style={{ fontSize: "5px" }}>
-          #삽니다 #발주 #졸업과제 #스터디 #퍼블리셔
-        </CardTitle>
-        <CardSubtitle tag="h4">sourcing 명칭 : naver_prj1</CardSubtitle>
-        <br />
-        <CardText>
-          8page 분량 웹 퍼블리셔 발주합니다. 자세한 스펙 및 코드는 입찰 후
-          개인적으로 연락드리겠습니다.
-        </CardText>
-        <Button color="primary">입찰하기</Button>
-      </CardBody>
+      <div className="detailContainer">
+        <div className="datailScript">
+          <CardBody style={{ margin: "10px" }}>
+            <CardTitle>#삽니다 #발주 #졸업과제 #스터디 #퍼블리셔</CardTitle>
+            <CardSubtitle tag="h4">sourcing 명칭 : naver_prj1</CardSubtitle>
+            <br />
+            <CardText>
+              8page 분량 웹 퍼블리셔 발주합니다. 자세한 스펙 및 코드는 입찰 후
+              개인적으로 연락드리겠습니다.
+            </CardText>
+          </CardBody>
+        </div>
+        <div className="detailImg">
+          <ul>
+            <li>
+              <img src={"http://localhost:5001/_resources/images/test.png"} />
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div className="buttonContainer">
+        <Button className="attndBtn" color="primary">
+          입찰
+        </Button>
+      </div>
     </div>
   );
 }

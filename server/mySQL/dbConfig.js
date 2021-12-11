@@ -19,3 +19,13 @@ pool.getConnection(function(err, connection) {
     pool.end();
   }
 });
+
+var connection = mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  port: 3304,
+  password: "aa1202",
+  database: "myapp"
+});
+
+module.exports = connection;

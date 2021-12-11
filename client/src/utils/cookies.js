@@ -4,6 +4,7 @@ export const setCookie = (email, admin) => {
   console.log("set cookies");
   cookies.set("email", email);
   cookies.set("admin", admin);
+  return true;
 };
 export const getCookie = () => {
   const Email = cookies.get("email");
