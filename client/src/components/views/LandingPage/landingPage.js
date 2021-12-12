@@ -11,29 +11,52 @@ import Carousel from "../../../utils/Carousel";
 import axios from "axios";
 
 function LandingPage(props) {
-  let results;
-  let bundleList = new Map();
-  let imgList = [];
+  const [headerList, setHeaderList] = useState([]);
+  const [allItem, setAllItem] = useState([]);
   useEffect(() => {
     axios.get("/server/user/getItemList?mode=1").then(res => {
       if (res.data.success) {
         console.log(res.data.result[0].bundleSeq);
-        results = res.data.result;
-        console.log(results);
-        //1. bundle 그룹 골라내고
-        // results.map((cur, index, results) => {
-        //   return (bundleList[results[index].bundleSeq] =
-        //     results[index].bundleTag);
-        // });
+        console.log(res.data.result);
+        setHeaderList(res.data.result);
+      } else console.log(res.data.msg);
+    });
+    axios.get("/server/user/getItemList?mode=3").then(res => {
+      if (res.data.success) {
+        console.log(res.data.result);
+        setAllItem(res.data.result);
       } else console.log(res.data.msg);
     });
   }, []);
+  const getList = () => {
+    axios.get("/server/user/getItemList?mode=1").then(res => {
+      if (res.data.success) {
+        console.log("getList from props!", headerList);
+        setHeaderList(res.data.result);
+      } else console.log(res.data.msg);
+    });
+  };
 
   return (
     <div>
-      <div>
-        <GallaryItem authInfo={props.authInfo} itemList={results} />;
-      </div>
+      {headerList &&
+        headerList.map(item => {
+          return (
+            <div>
+              <GallaryItem
+                authInfo={props.authInfo}
+                mode="1"
+                thumbnail={item.thumbnail}
+                user_id={item.user_id}
+                bundleTag={item.bundleTag}
+                bundleDetail={item.bundleDetail}
+                bundleSeq={item.bundleSeq}
+                allItem={allItem}
+              />
+            </div>
+          );
+        })}
+
       {/* <div className="adContainer">
         <Carousel />
       </div> */}

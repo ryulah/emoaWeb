@@ -13,6 +13,7 @@ export default function UploadUtil(props) {
   var flag = false;
   const [fileList, setFileList] = useState(false);
   const [bundle, setBundle] = useState("");
+  const [bundelDetail, setBundleDetail] = useState("");
   const [disabled, setDisabled] = useState("disabled");
   const authEmail = props.authInfo._authEmail;
   const CheckFiles = () => {
@@ -31,9 +32,13 @@ export default function UploadUtil(props) {
     flag = true;
     CheckFiles();
   };
+  const bundelDetailHandler = e => {
+    setBundleDetail(e.currentTarget.value);
+    CheckFiles();
+  };
   return (
     <div>
-      <h3>upload your Emoticon bundle!</h3>
+      <h3>당신의 요구사항을 발주해보세요!</h3>
       <p>
         <SmileTwoTone />
         <HeartTwoTone />
@@ -44,12 +49,21 @@ export default function UploadUtil(props) {
         enctype="multipart/form-data"
         method="post"
       >
-        <label>(*)이모티콘 bundle 명칭 : </label>
+        <label> (*) 발주 bundle 명칭 : </label>
         <input
           type="text"
           name="bundleTag"
           value={bundle}
           onChange={bundleHandler}
+        />
+        <br />
+        <br />
+        <label> (*) 발주 요구사항(상세) : </label>
+        <input
+          type="textarea"
+          name="bundleDetail"
+          value={bundelDetail}
+          onChange={bundelDetailHandler}
         />
         <br />
         <br />

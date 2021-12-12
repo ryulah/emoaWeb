@@ -2,48 +2,58 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Button, Radio } from "antd";
 import { DownloadOutlined } from "@ant-design/icons";
+import GallaryItem from "./GallayItem";
 function UserGallery(props) {
   const authEmail = props.authInfo._authEmail;
-  const [itemCount, setItemCount] = useState("");
-  const [items, setItems] = useState([]);
-  var size = "large";
+  const [headerList, setHeaderList] = useState([]);
+  const [allItem, setAllItem] = useState([]);
+
   useEffect(() => {
     axios
-      .get(`/server/user/getUserIcons?user_id=${authEmail}&mode=2`)
+      .get(`/server/user/getItemList?user_id=${authEmail}&mode=2`)
       .then(res => {
         if (res.data.success) {
-          console.log(res.data.result);
-          setItems([...res.data.result]);
-          setItemCount(res.data.result.length);
+          console.log("##########header : ", res.data.result);
+          setHeaderList(res.data.result);
+        }
+      });
+    axios
+      .get(`/server/user/getItemList?user_id=${authEmail}&mode=4`)
+      .then(res => {
+        if (res.data.success) {
+          console.log("##########master : ", res.data.result);
+          setAllItem(res.data.result);
         }
       });
   }, [props.authInfo._authEmail]);
 
   return (
     <div>
-      {itemCount < 1 && (
+      {headerList.length < 1 && (
         <div>
           <h1 style={{ "font-size": "100px" }}>텅..</h1>
           <a href="/upload">
-            <Button type="primary" icon={<DownloadOutlined />} size={size}>
+            <Button type="primary" icon={<DownloadOutlined />}>
               업로드 하러 가기!
             </Button>
           </a>
         </div>
       )}
-      {itemCount > 0 &&
-        items.map((cur, index, items) => {
-          console.log(cur);
+      {headerList &&
+        headerList.map(item => {
           return (
-            <img
-              style={{
-                minWidth: "300px",
-                width: "300px",
-                height: "240px"
-              }}
-              src={"http://localhost:5001/resources/images/" + cur}
-              key={index}
-            />
+            <div>
+              <GallaryItem
+                authInfo={props.authInfo}
+                mode="2"
+                thumbnail={item.thumbnail}
+                user_id={item.user_id}
+                bundleTag={item.bundleTag}
+                bundleDetail={item.bundleDetail}
+                bundleSeq={item.bundleSeq}
+                allItem={allItem}
+              />
+            </div>
           );
         })}
     </div>

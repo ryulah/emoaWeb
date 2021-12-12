@@ -13,7 +13,7 @@ function MiddleMenu(props) {
         <a href="/register"> register</a>
       </li>
       <li>
-        <a href="/upload"> upload emoticons</a>
+        <a href="/upload"> upload Sourcing(발주하기!)</a>
       </li>
       <li>
         <a href="/mygallery"> My Gallery</a>

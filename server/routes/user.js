@@ -93,6 +93,7 @@ const storage = multer.diskStorage({
     var extension = path.basename(file.originalname).split(".")[1];
     console.log(req.cookies.email);
     console.log(req.body.bundleTag);
+    console.log(req.body.bundleDetail);
     cb(
       null,
       req.cookies.email +
@@ -117,11 +118,12 @@ router.post("/multipart/upload", upload.array("attachments"), (req, res) => {
   var queryValuesForHeader = [
     req.cookies.email,
     req.files[0].filename,
-    req.body.bundleTag
+    req.body.bundleTag,
+    req.body.bundleDetail
   ];
 
   connection.query(
-    "insert into item_header (user_id,thumbnail,bundleTag) values (?,?,?)",
+    "insert into item_header (user_id,thumbnail,bundleTag,bundleDetail) values (?,?,?,?)",
     queryValuesForHeader,
     err => {
       if (err) {
@@ -192,7 +194,7 @@ router.post("/multipart/upload", upload.array("attachments"), (req, res) => {
 router.get("/getItemList", (req, res) => {
   console.log("getItemList", req.query.user_id);
   console.log("getItemList", req.query.mode);
-  var queryStr = "select * from item_master where deleteYN='N' and user_id=?";
+  var queryStr = "select * from item_header where deleteYN='N' and user_id=?";
   var queryValues = [req.query.user_id];
   var resultsArray = [];
   var bundleList = [];
@@ -213,7 +215,7 @@ router.get("/getItemList", (req, res) => {
         }
       }
     );
-  } else {
+  } else if (req.query.mode == 2) {
     console.log("mode 2");
     connection.query(queryStr, queryValues, (err, results) => {
       if (err) {
@@ -223,13 +225,45 @@ router.get("/getItemList", (req, res) => {
           .send({ success: false, msg: "/getUserIcon err " + err });
       } else {
         console.log(results);
-        resultsArray = results.map((cur, index, results) => {
-          return results[index].savedFile;
-        });
+
         return res.status(200).send({
           success: true,
           msg: "success to fetch user icons",
-          result: resultsArray
+          result: results
+        });
+      }
+    });
+  } else if (req.query.mode == 3) {
+    console.log("mode 3");
+    queryStr = "select * from item_master where deleteYN='N'";
+    connection.query(queryStr, (err, results) => {
+      if (err) {
+        return res
+          .status(500)
+          .send({ success: false, msg: "failed to select all item" });
+      } else {
+        console.log(results);
+        return res.status(200).send({
+          success: true,
+          msg: "success to get items",
+          result: results
+        });
+      }
+    });
+  } else {
+    console.log("mode 4");
+    queryStr = "select * from item_master where deleteYN='N' and user_id=?";
+    connection.query(queryStr, queryValues, (err, results) => {
+      if (err) {
+        return res
+          .status(500)
+          .send({ success: false, msg: "failed to select all item" });
+      } else {
+        console.log(results);
+        return res.status(200).send({
+          success: true,
+          msg: "success to get items",
+          result: results
         });
       }
     });
