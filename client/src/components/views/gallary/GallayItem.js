@@ -15,6 +15,11 @@ import {
 } from "reactstrap";
 import { element } from "prop-types";
 function GallayItem(props) {
+  const applyProject = e => {
+    let applyBundleSeq = e.currentTarget.value;
+    console.log("apply to : ", applyBundleSeq);
+  };
+
   return (
     <div className="itemContainter">
       <div className="thumbnailContainer">
@@ -53,11 +58,25 @@ function GallayItem(props) {
           </ul>
         </div>
       </div>
-      <div className="buttonContainer">
-        <Button className="attndBtn" color="primary">
-          입찰
-        </Button>
-      </div>
+      {props.mode == 1 && (
+        <div className="buttonContainer">
+          <Button
+            className="attndBtn"
+            color="primary"
+            value={props.bundleSeq}
+            onClick={applyProject}
+          >
+            입찰
+          </Button>
+        </div>
+      )}
+      {props.mode == 2 && (
+        <div className="buttonContainer">
+          <Button className="applydBtn" color="primary" value={props.bundleSeq}>
+            입찰현황보기
+          </Button>
+        </div>
+      )}
     </div>
   );
 }
