@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-function RegisterPage() {
+function RegisterPage(props) {
+  const navigate = useNavigate();
   const [Email, setEmail] = useState("");
   const [Password, setPassword] = useState("");
   const [Name, setName] = useState("");
@@ -56,6 +58,11 @@ function RegisterPage() {
       alert("email을 입력해주세요");
     }
   };
+  useEffect(() => {
+    if (props.authInfo._authEmail) {
+      navigate("/");
+    }
+  }, [props.authInfo._authEmail]);
   return (
     <div>
       <form id="register-form" onSubmit={submitHandler}>

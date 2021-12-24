@@ -5,8 +5,7 @@ function LeftMenu() {
     <div>
       <div className="navbar__logo">
         <a href="/" style={{ "font-size": "50px" }}>
-          <RocketOutlined />
-          <p>emoa moa</p>
+          <p>wonder work</p>
         </a>
       </div>
     </div>

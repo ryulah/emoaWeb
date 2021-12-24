@@ -1,21 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Password from "antd/lib/input/Password";
 import { setCookie } from "../../../utils/cookies";
-import { redirect } from "react-router-dom";
+
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function LoginPage(props) {
   const [Email, setEmail] = useState("");
   const [Password, setPAssword] = useState("");
-  // if (props.authInfo.email) {
-  //   if (props.authInfo.admin) {
-  //     console.log("Admin checked");
-  //   } else {
-  //     console.log("public user");
-  //   }
-  // } else {
-  //   console.log("need to login or sign up");
-  // }
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (props.authInfo._authEmail) {
+      navigate("/");
+    }
+  }, [props.authInfo._authEmail]);
   const emailHandler = e => {
     console.log("emailHandler" + e.currentTarget.value);
     setEmail(e.currentTarget.value);

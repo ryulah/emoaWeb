@@ -16,6 +16,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use("/server/user", userRouter);
 app.use("/_resources", express.static("_resources"));
+app.use("/_static", express.static("_static"));
 
 app.get("/", (req, res) => {
   console.log("Hello World!", req.body);

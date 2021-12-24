@@ -1,65 +1,47 @@
 import React, { useState, useEffect } from "react";
+
 import {
   authEmail,
   authAdmin,
   setAuthEmail,
   setAuthAdmin
 } from "../../../utils/Auth";
-import Gallery from "../gallary/Gallery_test";
 import GallaryItem from "../gallary/GallayItem";
-import Carousel from "../../../utils/Carousel";
 import axios from "axios";
+import landing from "../../../resources/css/landing.css";
 
+import "bootstrap/dist/css/bootstrap.css";
+import { Button } from "reactstrap";
+import jQuery from "jquery";
+window.$ = window.jQuery = jQuery;
 function LandingPage(props) {
-  const [headerList, setHeaderList] = useState([]);
-  const [allItem, setAllItem] = useState([]);
-  useEffect(() => {
-    axios.get("/server/user/getItemList?mode=1").then(res => {
-      if (res.data.success) {
-        console.log(res.data.result[0].bundleSeq);
-        console.log(res.data.result);
-        setHeaderList(res.data.result);
-      } else console.log(res.data.msg);
-    });
-    axios.get("/server/user/getItemList?mode=3").then(res => {
-      if (res.data.success) {
-        console.log(res.data.result);
-        setAllItem(res.data.result);
-      } else console.log(res.data.msg);
-    });
-  }, []);
-  const getList = () => {
-    axios.get("/server/user/getItemList?mode=1").then(res => {
-      if (res.data.success) {
-        console.log("getList from props!", headerList);
-        setHeaderList(res.data.result);
-      } else console.log(res.data.msg);
-    });
-  };
-
+  var path = "http://localhost:5001/_static/resource/background3.mp4";
   return (
-    <div>
-      {headerList &&
-        headerList.map(item => {
-          return (
-            <div>
-              <GallaryItem
-                authInfo={props.authInfo}
-                mode="1"
-                thumbnail={item.thumbnail}
-                user_id={item.user_id}
-                bundleTag={item.bundleTag}
-                bundleDetail={item.bundleDetail}
-                bundleSeq={item.bundleSeq}
-                allItem={allItem}
-              />
-            </div>
-          );
-        })}
+    <div id="main">
+      <div className="backgroundMain">
+        <video src={path} muted autoPlay loop></video>
 
-      {/* <div className="adContainer">
-        <Carousel />
-      </div> */}
+        <div className="welcomeBox">
+          <h1>Welcome!</h1>
+          <p>
+            {" "}
+            we can make your work more easier.
+            <br /> like WONDER WALL
+          </p>
+          <p>
+            {" "}
+            we gonna show you other references and friends <br /> who need your
+            help or give you their hands.
+          </p>
+          <p> try it, get it your own wonder work!</p>
+          <p> so.. if you want make your wonder work, </p>
+          <a href="/register">
+            <Button className="joinBtn" color="primary">
+              join
+            </Button>
+          </a>
+        </div>
+      </div>
     </div>
   );
 }

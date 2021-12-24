@@ -1,39 +1,64 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import GallaryItem from "../../../utils/GallayItemUtil";
 function Gallery(props) {
-  const authEmail = props.authInfo._authEmail;
-  const [itemCount, setItemCount] = useState("");
-  const [items, setItems] = useState([]);
+  const [headerList, setHeaderList] = useState([]);
+  const [allItem, setAllItem] = useState([]);
+  const [count, setCount] = useState("");
   useEffect(() => {
-    axios
-      .get(`/server/user/getUserIcons?user_id=${authEmail}&mode=1`)
-      .then(res => {
-        if (res.data.success) {
-          console.log(res.data.result);
-          setItems([...res.data.result]);
-          setItemCount(res.data.result.length);
-        }
-      });
-  }, [props.authInfo._authEmail]);
+    axios.get("/server/user/getItemList?mode=1").then(res => {
+      if (res.data.success) {
+        console.log(res.data.result[0].bundleSeq);
+        console.log(res.data.result);
+        setHeaderList(res.data.result);
+        setCount(res.data.result.length);
+      } else console.log(res.data.msg);
+    });
+    axios.get("/server/user/getItemList?mode=3").then(res => {
+      if (res.data.success) {
+        console.log(res.data.result);
+        setAllItem(res.data.result);
+      } else console.log(res.data.msg);
+    });
+  }, []);
+  const getList = () => {
+    axios.get("/server/user/getItemList?mode=1").then(res => {
+      if (res.data.success) {
+        console.log("getList from props!", headerList);
+        setHeaderList(res.data.result);
+      } else console.log(res.data.msg);
+    });
+  };
 
   return (
     <div>
-      {itemCount < 1 && <h1 style={{ "font-size": "100px" }}>텅..</h1>}
-      {itemCount > 0 &&
-        items.map((cur, index, items) => {
-          console.log(cur);
+      <div className="currentBoard">
+        <h4>
+          현재 <span style={{ color: "red" }}>{count} </span>개의 프로젝트가
+          당신을 기다려요!
+        </h4>
+      </div>
+      {headerList &&
+        headerList.map(item => {
           return (
-            <img
-              style={{
-                minWidth: "300px",
-                width: "300px",
-                height: "240px"
-              }}
-              src={"http://localhost:5001/resources/images/" + cur}
-              key={index}
-            />
+            <div>
+              <GallaryItem
+                authInfo={props.authInfo}
+                mode="1"
+                thumbnail={item.thumbnail}
+                user_id={item.user_id}
+                bundleTag={item.bundleTag}
+                bundleDetail={item.bundleDetail}
+                bundleSeq={item.bundleSeq}
+                allItem={allItem}
+              />
+            </div>
           );
         })}
+
+      {/* <div className="adContainer">
+        <Carousel />
+      </div> */}
     </div>
   );
 }

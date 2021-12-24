@@ -12,3 +12,9 @@ export const getCookie = () => {
   let body = { email: Email, admin: Admin };
   return body;
 };
+export const removeCookie = _authEmail => {
+  console.log("remove cookie", _authEmail);
+  cookies.remove("email");
+  cookies.remove("admin");
+  return true;
+};

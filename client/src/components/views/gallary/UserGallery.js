@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Button, Radio } from "antd";
 import { DownloadOutlined } from "@ant-design/icons";
-import GallaryItem from "./GallayItem";
+// import GallaryItem from "./GallayItem";
+import GallaryItem from "../../../utils/GallayItemUtil";
 function UserGallery(props) {
   const authEmail = props.authInfo._authEmail;
   const [headerList, setHeaderList] = useState([]);

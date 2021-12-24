@@ -18,6 +18,17 @@ export const getAuthAdmin = () => {
 
 export const loginCheck = () => {
   let body = getCookie();
-  if (body.email != null || body.emil != undefined) return true;
-  return false;
+  if (body.email != null || body.email != undefined) return 1;
+  return 0;
+};
+
+export const getAdminCheck = () => {
+  let body = getCookie();
+  if (body.admin == true) return 1;
+  return 0;
+};
+
+export const getAuthEmail = () => {
+  let body = getCookie();
+  return body.email;
 };

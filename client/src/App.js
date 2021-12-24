@@ -6,7 +6,9 @@ import LoginPage from "./components/views/loginPage/LoginPage";
 import RegisterPage from "./components/views/registerPage/RegisterPage";
 import UploadPage from "./components/views/UploadPage/UploadPage";
 import UserGallery from "./components/views/gallary/UserGallery";
+import Authentication from "././components/hoc/HOC";
 import HelpDesk from "./components/views/Helpdesk/Helpdesk";
+import Gallery from "./components/views/gallary/Gallery";
 import {
   authEmail,
   authAdmin,
@@ -25,36 +27,42 @@ import { getCookie } from "./utils/cookies";
 import react, { Component, useState, useEffect } from "react";
 import { userAdmin } from "./utils/Auth";
 import UserInfo from "./components/views/userInfo/UserInfo";
+import { getAdminCheck, getAuthEmail, loginCheck } from "./utils/Auth";
 
 function App() {
   const [authEmail, setAuthEmail] = useState("");
   const [authAdmin, setAuthAdmin] = useState(false);
   var authInfo = { _authEmail: authEmail, _authAdmin: authAdmin };
   useEffect(() => {
-    var auth = getCookie();
-    console.log("root page user check", auth);
-    if (auth.email !== null) {
-      if (auth.admin === true) {
-        console.log("Admin checked : ", auth.email);
-        setAuthAdmin(true);
-      } else {
-        console.log("public user : ", auth.email);
-      }
-      setAuthEmail(auth.email);
-    } else {
-      console.log("need to login or sign up");
+    setAuthAdmin(getAdminCheck());
+    setAuthEmail(getAuthEmail());
+    setAuthAdmin();
+  }, [authEmail]);
+  var resetPage = flag => {
+    console.log("again");
+    if (flag == 0) {
+      setAuthAdmin(getAdminCheck());
+      setAuthEmail(getAuthEmail());
+      setAuthAdmin();
     }
-  }, []);
-
+  };
   return (
     <div className="App">
-      <NavBar authInfo={authInfo} />
+      <NavBar authInfo={authInfo} refresh={resetPage} />
       <Router>
         <Routes>
           <Route
             exact={true}
             path={"/"}
             element={<LandingPage authInfo={authInfo} />}
+          />
+          {/* <Route Component={Authentication(LandingPage, 0, "/")} /> */}
+        </Routes>
+        <Routes>
+          <Route
+            exact={true}
+            path={"/apply"}
+            element={<Gallery authInfo={authInfo} />}
           />
         </Routes>
         <Routes>
