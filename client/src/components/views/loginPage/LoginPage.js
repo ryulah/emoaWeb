@@ -4,7 +4,7 @@ import { setCookie } from "../../../utils/cookies";
 
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
+import LeftNavBar from "../navBar/LeftNavBar";
 function LoginPage(props) {
   const [Email, setEmail] = useState("");
   const [Password, setPAssword] = useState("");
@@ -49,6 +49,7 @@ function LoginPage(props) {
 
   return (
     <div>
+      <LeftNavBar />
       <form
         id="login-form"
         onSubmit={submitHandler}

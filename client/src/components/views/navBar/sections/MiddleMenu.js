@@ -10,19 +10,20 @@ function MiddleMenu(props) {
     setLoginFlag(loginCheck());
   }, [loginFlag]);
   const logOutHandler = () => {
-    // if (removeCookie(getAuthEmail())) {
-    //   setLoginFlag(loginCheck());
-    //   props.refresh();
-    // }
+    console.log("@@", props);
+    if (removeCookie(getAuthEmail())) {
+      setLoginFlag(loginCheck());
+      props.refresh();
+    }
   };
   return (
     <ul className="navbar__menu">
       <li>
-        <a href="/">HOME </a>
+        <a href="/">Home </a>
       </li>
       {!loginFlag && (
         <li>
-          <a href="/login"> login </a>
+          <a href="/login"> Login </a>
         </li>
       )}
       {/* <li>
@@ -30,27 +31,35 @@ function MiddleMenu(props) {
       </li> */}
       {!loginFlag && (
         <li>
-          <a href="/register"> register</a>
+          <a href="/register"> Register</a>
         </li>
       )}
       {/* <li>
         <a href="/register"> register</a>
       </li> */}
       <li>
-        <a href="/apply"> 지원하기</a>
+        <a href="/apply"> Apply Project</a>
       </li>
       <li>
-        <a href="/upload"> upload Sourcing(발주하기!)</a>
+        <a href="/upload"> Request Sourcing</a>
       </li>
       <li>
-        <a href="/mygallery"> My Gallery</a>
+        <a href="#"> My Gallery</a>
+        <ul className="dropmenu">
+          <li>
+            <a href="/mygallery">gallary</a>
+          </li>
+          <li>
+            <a href="#">지원현황</a>
+          </li>
+        </ul>
       </li>
       <li>
         <a href="/helpdesk"> HELP DESK</a>
       </li>
       {loginFlag == 1 && (
         <li>
-          <Button onClick={logOutHandler}>logout</Button>
+          <Button onClick={props.refresh(0)}>logout</Button>
         </li>
       )}
     </ul>

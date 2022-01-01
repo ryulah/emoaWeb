@@ -1,7 +1,9 @@
+@import url("https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@700&display=swap");
 :root {
   --text-color: white;
-  --backgroud-color: black;
-  --accent-colr: #d49466;
+  --backgroud-color: #ffffff00;
+  --accent-colr: #1a1919;
+  --font-family: "Nanum Gothic", sans-serif;
 }
 
 body {
@@ -20,52 +22,86 @@ a {
   background-color: var(--backgroud-color);
   /* 위, 아래 */
   padding: 8px 12px;
-  z-index: 2;
+  z-index: 1;
   opacity: 0.7;
-  height: 70px;
+  height: 80px;
+  /* padding-top: 0;
+  padding-bottom: 0; */
+  font-weight: bold;
+  /* 상단고정 position:sticky, top:0 */
+  position: sticky;
+  top: 0;
+  font-family: var(--font-family);
 }
-.navbar__logo,
-.navbar__logo p {
+
+.navbar__logo {
+  font-family: var(--font-family);
   font-size: 24px;
-  color: white;
+
+  opacity: 1;
+  list-style: none;
+  z-index: 10;
+  /* margin: -300px 20px; */
+  margin-top: -300px;
+  margin-left: 20px;
+  margin-right: 20px;
+  padding-left: 0px;
+}
+
+.navbar__logo p {
+  font-family: var(--font-family);
+  font-size: 24px;
+  color: var(--text-color);
   z-index: 3;
   opacity: 1;
 }
 
 .navbar__logo i {
-  color: white;
+  font-family: var(--font-family);
+  color: var(--text-color);
   z-index: 3;
   opacity: 1;
 }
+
 .navbar__menu {
+  font-family: var(--font-family);
   display: flex;
   list-style: none;
   padding-left: 0;
   z-index: 3;
   opacity: 1;
+  margin: 10px 20px;
 }
 
 .navbar__menu li {
-  padding: 8px 12px;
+  font-family: var(--font-family);
+  padding: 12px 12px;
+  /* font-weight: bold; */
 }
 .navbar__userInfo {
-  padding-left: 0;
+  font-family: var(--font-family);
+  /* margin: -300px 20px; */
+  margin-top: -300px;
+  margin-left: 20px;
+  margin-right: 20px;
   color: white;
   list-style: none;
   display: flex;
   justify-content: left;
   z-index: 3;
   opacity: 1;
+  height: 52px;
 }
 
 .navbar__userInfo li {
+  font-family: var(--font-family);
   padding: 8px 12px;
   z-index: 3;
   opacity: 1;
 }
 
 .navbar__menu li:hover {
-  background-color: #d49466;
+  /* background-color: #d49466; */
   border-radius: 4px;
 }
 .navbar__toggleBtn {
@@ -75,14 +111,8 @@ a {
   font-size: 24px;
   color: #d49466;
 }
-.navbar__logo a,
-.navbar__logo span {
-  display: flex;
-  margin-top: 10px;
-}
 
 .gallery__carousel {
-  /* height: 5%; */
   width: 40%;
   margin-left: 30%;
   margin: 10px 35% 10px;
@@ -99,6 +129,35 @@ a {
 .card-img-top,
 .card-img-bottom {
   width: 40%;
+}
+
+.LeftNav_body {
+  background-color: white;
+  color: black;
+  width: 10%;
+  height: 100vh;
+}
+
+.dropmenu {
+  list-style: none;
+  text-align: center;
+  margin-left: 0;
+  margin-top: 30px;
+  display: block;
+  z-index: 5;
+  opacity: 0;
+  padding-left: 0;
+  height: 300px;
+}
+.navbar__menu li:hover ul {
+  opacity: 1;
+}
+.dropmenu li:hover {
+  background-color: var(--accent-colr);
+}
+.dropmenu li a {
+  color: var(--text-color);
+  font-weight: bolder;
 }
 
 @media screen and (max-width: 970px) {

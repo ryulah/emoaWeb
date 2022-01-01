@@ -38,12 +38,13 @@ function App() {
     setAuthEmail(getAuthEmail());
     setAuthAdmin();
   }, [authEmail]);
-  var resetPage = flag => {
-    console.log("again");
+  const resetPage = flag => {
+    console.log("again reset page");
     if (flag == 0) {
-      setAuthAdmin(getAdminCheck());
+      console.log("again reset page", flag);
+      //setAuthAdmin(getAdminCheck());
       setAuthEmail(getAuthEmail());
-      setAuthAdmin();
+      setAuthAdmin(false);
     }
   };
   return (
@@ -97,6 +98,7 @@ function App() {
           <Route exact={true} path={"/helpdesk"} element={<HelpDesk />} />
         </Routes>
       </Router>
+      <Footer />
     </div>
   );
 }
