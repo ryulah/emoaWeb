@@ -5,7 +5,7 @@ function Footer() {
     <footer className="footer">
       <div className="footer__main">
         @wonder work co.
-        <br /> 저작권을 침해하는 행위를 할 경우 처벌합니다.
+        <br /> powered by seren1616 / Designed by seren 1616
       </div>
     </footer>
   );
