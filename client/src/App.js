@@ -9,6 +9,8 @@ import UserGallery from "./components/views/gallary/UserGallery";
 import Authentication from "././components/hoc/HOC";
 import HelpDesk from "./components/views/Helpdesk/Helpdesk";
 import Gallery from "./components/views/gallary/Gallery";
+import QnARequest from "./components/views/Helpdesk/QnARequest";
+import PostView from "./components/views/Helpdesk/PostView";
 import {
   authEmail,
   authAdmin,
@@ -97,8 +99,13 @@ function App() {
         <Routes>
           <Route exact={true} path={"/helpdesk"} element={<HelpDesk />} />
         </Routes>
+        <Routes>
+          <Route exact={true} path={"/requestQnA"} element={<QnARequest />} />
+        </Routes>
+        <Routes>
+          <Route exact={true} path={"/postView/:no"} element={<PostView />} />
+        </Routes>
       </Router>
-      <Footer />
     </div>
   );
 }

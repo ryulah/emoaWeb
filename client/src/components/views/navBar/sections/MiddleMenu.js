@@ -45,14 +45,14 @@ function MiddleMenu(props) {
       </li>
       <li>
         <a href="#"> My Gallery</a>
-        <ul className="dropmenu">
+        {/* <ul className="dropmenu">
           <li>
             <a href="/mygallery">gallary</a>
           </li>
           <li>
             <a href="#">지원현황</a>
           </li>
-        </ul>
+        </ul> */}
       </li>
       <li>
         <a href="/helpdesk"> HELP DESK</a>

@@ -16,7 +16,6 @@ import IntrodudeClip from "../clips/IntroducdClip";
 import "bootstrap/dist/css/bootstrap.css";
 import { Button } from "reactstrap";
 import jQuery from "jquery";
-
 window.$ = window.jQuery = jQuery;
 function LandingPage(props) {
   var path = "http://localhost:5001/_static/resource/background3.mp4";

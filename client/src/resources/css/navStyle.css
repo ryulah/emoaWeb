@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@700&display=swap");
 :root {
-  --text-color: white;
-  --backgroud-color: #ffffff00;
+  --text-color: black;
+  --backgroud-color: whitesmoke;
   --accent-colr: #1a1919;
   --font-family: "Nanum Gothic", sans-serif;
 }
@@ -11,7 +11,7 @@ body {
 }
 a {
   text-decoration: none;
-  color: white;
+  color: black;
 }
 .navbar {
   /* 한 줄로 align */
@@ -52,7 +52,7 @@ a {
   font-family: var(--font-family);
   font-size: 24px;
   color: var(--text-color);
-  z-index: 3;
+  z-index: 5;
   opacity: 1;
 }
 
@@ -84,7 +84,7 @@ a {
   margin-top: -300px;
   margin-left: 20px;
   margin-right: 20px;
-  color: white;
+  color: black;
   list-style: none;
   display: flex;
   justify-content: left;

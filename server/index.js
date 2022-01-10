@@ -4,6 +4,7 @@ const port = 5001;
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const userRouter = require("./routes/user");
+const contentsRouter = require("./routes/board");
 //const resources = require("../resources/images");
 
 app.use(bodyParser.json());
@@ -15,6 +16,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use("/server/user", userRouter);
+app.use("/server/contents", contentsRouter);
 app.use("/_resources", express.static("_resources"));
 app.use("/_static", express.static("_static"));
 
